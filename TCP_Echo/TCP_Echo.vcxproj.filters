@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="server_main.c" />
+    <ClCompile Include="wrapsock.c">
+      <Filter>Sock_Wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="error.c">
+      <Filter>Sock_Wrapers</Filter>
+    </ClCompile>
+    <ClCompile Include="wrapunix.c">
+      <Filter>Unix_Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="helpfunc.c">
+      <Filter>Help_Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="sockfuncs.c">
+      <Filter>Sock_Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="stdiowrappfunc.c">
+      <Filter>STDIO_Wrappers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sock_Wrapers">
+      <UniqueIdentifier>{7a9d8fd6-f24b-41c0-85aa-cbe9219921df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unix_Wrappers">
+      <UniqueIdentifier>{e50b6827-3b3e-4973-ba8e-a2486b063761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Help_Functions">
+      <UniqueIdentifier>{f3f0909c-1d4c-42d0-b27b-546dc1758914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sock_Functions">
+      <UniqueIdentifier>{fa0da573-61b2-4833-89e3-95f86cff8425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STDIO_Wrappers">
+      <UniqueIdentifier>{41aecfdc-0e93-475e-ba85-99d7497fed43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="wrapsock.h">
+      <Filter>Sock_Wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="error.h">
+      <Filter>Sock_Wrapers</Filter>
+    </ClInclude>
+    <ClInclude Include="wrapunix.h">
+      <Filter>Unix_Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpfunc.h">
+      <Filter>Help_Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="config_params.h" />
+    <ClInclude Include="wrappers.h" />
+    <ClInclude Include="sockfuncs.h">
+      <Filter>Sock_Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="stdiowrappfunc.h">
+      <Filter>STDIO_Wrappers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
