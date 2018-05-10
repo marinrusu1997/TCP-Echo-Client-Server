@@ -8,6 +8,7 @@
 #include "config_params.h"
 
 void str_echo(int sockfd);
+void sigh_child(int signo);
 char lower(char c);
 char upper(char c);
 

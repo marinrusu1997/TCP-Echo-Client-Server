@@ -144,5 +144,18 @@ ssize_t writen(int fd, const void *vptr, size_t n) /*Write "n" bytes to a descri
 void Writen(int fd, void *ptr, size_t nbytes)
 {
 	if (writen(fd, ptr, nbytes) != nbytes)
-		err_sys("writen error");
+	{
+		if (errno == EPIPE)
+		{
+			puts("EPIPE error");
+			puts(strerror(errno));
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			err_sys("writen error");
+		}
+		
+	}
+		
 }

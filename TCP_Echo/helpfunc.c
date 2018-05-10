@@ -1,5 +1,6 @@
 
 #include "helpfunc.h"
+#include <sys/wait.h>
 
 /* c - upper case letter
    returns -1 if c is not a letter , on succes uppercase letter
@@ -40,6 +41,7 @@ void str_echo(int sockfd)
 	ssize_t    n;
 	char       buff[MAXLINE], lowerBuff[MAXLINE], c;
 	char	   *append, *ismaxim;
+	long	   arg1, arg2;
 
 	//again:
 	//	while ((n = read(sockfd, buff, MAXLINE)) > 0)
@@ -52,7 +54,7 @@ void str_echo(int sockfd)
 
 	for (;;)
 	{
-		if ((n = read(sockfd, buff, MAXLINE)) < 0)
+		if ((n = read(sockfd, buff, MAXLINE)) <= 0)
 			return;
 
 		int buff_size = strlen(buff);
@@ -62,15 +64,38 @@ void str_echo(int sockfd)
 
 		if ((ismaxim = strstr(lowerBuff, "maxim")) != NULL)
 		{
-			Writen(sockfd,"A Maxim,pashol nahui!\n", strlen("A Maxim,pashol nahui!\n"));
+			Writen(sockfd, "A Maxim,pashol nahui!\n", strlen("A Maxim,pashol nahui!\n"));
 			/*dont forget '\n',client expecting to read a line*/
+			bzero(lowerBuff, sizeof(lowerBuff));
 		}
 		else
 		{
-			if ((append = getenv("ECHOAPPEND")) != NULL && strlen(append) < SRVMAXLINEOFFSET)
-				Writen(sockfd, append, strlen(append));
-			Writen(sockfd, buff, n);
+			if (sscanf(buff, "%ld%ld", &arg1, &arg2) == 2) /* on succes sscanf returns the number of args specified */
+			{
+				snprintf(buff, sizeof(buff), "%ld\n", arg1 + arg2);
+				Writen(sockfd, buff, strlen(buff));
+				bzero(buff, sizeof(buff));
+			}
+			else
+			{
+				if ((append = getenv("ECHOAPPEND")) != NULL && strlen(append) < SRVMAXLINEOFFSET)
+					Writen(sockfd, append, strlen(append));
+				Writen(sockfd, buff, n);
+				bzero(buff, sizeof(buff));
+			}
 		}
 
 	}
+}
+
+void sigh_child(int signo)
+{
+	pid_t pid;
+	int	  stat;
+
+	//pid = wait(&stat);
+	//pid = waitpid(-1, &stat, 0); --unsafe,will proces only first signal,UNIX dont have queue of signals
+	while ((pid = waitpid(-1, &stat, WNOHANG)) > 0)
+		printf("child %d terminated , with status %d\n", pid, stat);
+	return;
 }
